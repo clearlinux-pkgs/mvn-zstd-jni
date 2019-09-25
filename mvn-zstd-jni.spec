@@ -4,15 +4,18 @@
 #
 Name     : mvn-zstd-jni
 Version  : 1.3.2.2
-Release  : 3
+Release  : 4
 URL      : https://github.com/luben/zstd-jni/archive/v1.3.2-2.tar.gz
 Source0  : https://github.com/luben/zstd-jni/archive/v1.3.2-2.tar.gz
 Source1  : https://repo1.maven.org/maven2/com/github/luben/zstd-jni/1.3.2-2/zstd-jni-1.3.2-2.jar
 Source2  : https://repo1.maven.org/maven2/com/github/luben/zstd-jni/1.3.2-2/zstd-jni-1.3.2-2.pom
+Source3  : https://repo1.maven.org/maven2/com/github/luben/zstd-jni/1.4.0-1/zstd-jni-1.4.0-1.jar
+Source4  : https://repo1.maven.org/maven2/com/github/luben/zstd-jni/1.4.0-1/zstd-jni-1.4.0-1.pom
 Summary  : No detailed summary available
 Group    : Development/Tools
 License  : BSD-2-Clause BSD-3-Clause GPL-2.0
 Requires: mvn-zstd-jni-data = %{version}-%{release}
+Requires: mvn-zstd-jni-license = %{version}-%{release}
 BuildRequires : buildreq-cmake
 
 %description
@@ -31,16 +34,35 @@ Group: Data
 data components for the mvn-zstd-jni package.
 
 
+%package license
+Summary: license components for the mvn-zstd-jni package.
+Group: Default
+
+%description license
+license components for the mvn-zstd-jni package.
+
+
 %prep
+%setup -q -n zstd-jni-1.3.2-2
 
 %build
 
 %install
+mkdir -p %{buildroot}/usr/share/package-licenses/mvn-zstd-jni
+cp LICENSE %{buildroot}/usr/share/package-licenses/mvn-zstd-jni/LICENSE
+cp src/main/native/COPYING %{buildroot}/usr/share/package-licenses/mvn-zstd-jni/src_main_native_COPYING
+cp src/main/native/LICENSE %{buildroot}/usr/share/package-licenses/mvn-zstd-jni/src_main_native_LICENSE
 mkdir -p %{buildroot}/usr/share/java/.m2/repository/com/github/luben/zstd-jni/1.3.2-2
 cp %{SOURCE1} %{buildroot}/usr/share/java/.m2/repository/com/github/luben/zstd-jni/1.3.2-2/zstd-jni-1.3.2-2.jar
 
 mkdir -p %{buildroot}/usr/share/java/.m2/repository/com/github/luben/zstd-jni/1.3.2-2
 cp %{SOURCE2} %{buildroot}/usr/share/java/.m2/repository/com/github/luben/zstd-jni/1.3.2-2/zstd-jni-1.3.2-2.pom
+
+mkdir -p %{buildroot}/usr/share/java/.m2/repository/com/github/luben/zstd-jni/1.4.0-1
+cp %{SOURCE3} %{buildroot}/usr/share/java/.m2/repository/com/github/luben/zstd-jni/1.4.0-1/zstd-jni-1.4.0-1.jar
+
+mkdir -p %{buildroot}/usr/share/java/.m2/repository/com/github/luben/zstd-jni/1.4.0-1
+cp %{SOURCE4} %{buildroot}/usr/share/java/.m2/repository/com/github/luben/zstd-jni/1.4.0-1/zstd-jni-1.4.0-1.pom
 
 
 %files
@@ -50,3 +72,11 @@ cp %{SOURCE2} %{buildroot}/usr/share/java/.m2/repository/com/github/luben/zstd-j
 %defattr(-,root,root,-)
 /usr/share/java/.m2/repository/com/github/luben/zstd-jni/1.3.2-2/zstd-jni-1.3.2-2.jar
 /usr/share/java/.m2/repository/com/github/luben/zstd-jni/1.3.2-2/zstd-jni-1.3.2-2.pom
+/usr/share/java/.m2/repository/com/github/luben/zstd-jni/1.4.0-1/zstd-jni-1.4.0-1.jar
+/usr/share/java/.m2/repository/com/github/luben/zstd-jni/1.4.0-1/zstd-jni-1.4.0-1.pom
+
+%files license
+%defattr(0644,root,root,0755)
+/usr/share/package-licenses/mvn-zstd-jni/LICENSE
+/usr/share/package-licenses/mvn-zstd-jni/src_main_native_COPYING
+/usr/share/package-licenses/mvn-zstd-jni/src_main_native_LICENSE
